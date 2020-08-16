@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>HH.ru: Автоматическое обновление резюме</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body onload="GetMe()">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div>
+                    <div class="page-header">
+                        <h1>Автоматическое обновление резюме на hh.ru</h1>
+                    </div>
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Внимание</h3>
+                        </div>
+                        <div class="panel-body">
+                            Полученные данные используются только для обновления даты доступных резюме. Мы не храним, не передаем третьим лицам и не распространяем информацию указанную в резюме. Мы не осуществляем рассылок по email-адресам и телефонам указанным в резюме.<br><br>В любой момент, после входа, Вы можете остановить обновления своих резюме нажатием кнопки "Удалить резюме из обновляемых". Сервис перестает запрашивать данные, если у пользователя нет ни одного резюме.<br><br>Вы используете сервис на свой страх и риск, несете полную ответственность и отказываетесь от любых претензий.
+                        </div>
+                    </div>
+                    <p>
+                        <a class="btn btn-default btn-lg" role="button" href="/authorize">Войти</a>
+                    </p>
+                </div>
+                <footer class="footer">
+                    <p>© 2020 artkescha. <a href="https://github.com/artkescha/hh-updater">GitHub</a></p>
+                </footer>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (d, w, c) {
+            (w[c] = w[c] || []).push(function() {
+                try {
+                    w.yaCounter44855296 = new Ya.Metrika({
+                        id:44855296,
+                        clickmap:true,
+                        trackLinks:true,
+                        accurateTrackBounce:true
+                    });
+                } catch(e) { }
+            });
+
+            var n = d.getElementsByTagName("script")[0],
+                s = d.createElement("script"),
+                f = function () { n.parentNode.insertBefore(s, n); };
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+            if (w.opera == "[object Opera]") {
+                d.addEventListener("DOMContentLoaded", f, false);
+            } else { f(); }
+        })(document, window, "yandex_metrika_callbacks");
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/44855296" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+</body>
+</html>
