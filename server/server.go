@@ -165,7 +165,7 @@ func (s *Server) publishUserResumes(user *User) (int, error) {
 		return 0, ErrEmptyResumeList
 	}
 	for _, r := range resumeList {
-		logrus.Debugf("Requesting resume status: '%s'", r.Experience)
+		logrus.Debugf("Requesting resume status: '%s'", r.Title)
 		status, err := client.Resume.ResumesStatus(r)
 		if err != nil {
 			return 0, fmt.Errorf("Error getting resume status '%s': %v", r.Title, err)
@@ -176,7 +176,7 @@ func (s *Server) publishUserResumes(user *User) (int, error) {
 		}
 		updateCompanyName(r, s.c.CompanyNameSuffix)
 
-		logrus.Debugf("Publishing resume: '%s'", r.Title)
+		logrus.Debugf("Publishing resume: '%s' companies: '%s'", r.Title, r.Experience)
 		if err := client.Resume.ResumesPublish(r); err != nil {
 			return 0, fmt.Errorf("Error publishing resume '%s': %v", r.Title, err)
 		}

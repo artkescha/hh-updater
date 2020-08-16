@@ -58,7 +58,6 @@ func (r *ResumeService) ResumeMine() ([]*Resume, error) {
 	if err := json.Unmarshal(body, &resumeList); err != nil {
 		return nil, err
 	}
-	logrus.Debug("body: %s", string(body))
 	return resumeList.Resumes, nil
 }
 
