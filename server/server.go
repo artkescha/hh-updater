@@ -176,10 +176,14 @@ func (s *Server) publishUserResumes(user *User) (int, error) {
 		}
 		updateCompanyName(r, s.c.CompanyNameSuffix)
 
-		logrus.Debugf("Publishing resume: '%s' companies: '%s'", r.Title, r.Experience)
-		if err := client.Resume.ResumesPublish(r); err != nil {
-			return 0, fmt.Errorf("Error publishing resume '%s': %v", r.Title, err)
+		if err := client.Resume.ResumesEdit(r); err != nil {
+			logrus.Errorf("Error editing resume '%s': %s", r.Title, err)
 		}
+
+		if err := client.Resume.ResumesPublish(r); err != nil {
+			return 0, fmt.Errorf("Error publishing resume '%s': %s", r.Title, err)
+		}
+		logrus.Debugf("Publishing resume: '%s' companies: '%s'", r.Title, r.Experience)
 		updateCount++
 		logrus.Infof("Resume updated: '%s'", r.Title)
 	}

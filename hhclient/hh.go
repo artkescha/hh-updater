@@ -12,7 +12,6 @@ const (
 )
 
 type Client struct {
-	client    *http.Client
 	BaseURL   *url.URL
 	UserAgent string
 
@@ -30,10 +29,8 @@ func NewClient(token *oauth2.Token) *Client {
 			AccessToken: token.AccessToken,
 		},
 	}
-	c := &Client{
-		client: httpClient,
-	}
-	c.Me = &MeService{c.client}
-	c.Resume = &ResumeService{c.client}
+	c := &Client{}
+	c.Me = &MeService{httpClient}
+	c.Resume = &ResumeService{httpClient}
 	return c
 }

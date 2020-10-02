@@ -1,10 +1,12 @@
 package hhclient
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"io/ioutil"
+	"net/http"
 )
 
 type ResumeService service
@@ -68,6 +70,28 @@ func (r *ResumeService) ResumesPublish(resume *Resume) error {
 	}
 	if code := resp.StatusCode; code < 200 || code > 299 {
 		logrus.Debug("resumes publish: %v", code)
+		return fmt.Errorf("Incorrect status code (%s)", resp.Status)
+	}
+	return nil
+}
+
+func (r *ResumeService) ResumesEdit(resume *Resume) error {
+	json, err := json.Marshal(resume)
+	if err != nil {
+		return err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, fmt.Sprintf("%sresumes/%s", DefaultBaseURL, resume.ID), bytes.NewBuffer(json))
+	if err != nil {
+		return err
+	}
+	req.Header.Set("Content-Type", "application/json; charset=utf-8")
+	resp, err := r.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if code := resp.StatusCode; code != http.StatusNoContent {
+		logrus.Debug("resumes edit: %v", code)
 		return fmt.Errorf("Incorrect status code (%s)", resp.Status)
 	}
 	return nil
