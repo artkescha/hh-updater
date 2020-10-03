@@ -174,11 +174,6 @@ func (s *Server) publishUserResumes(user *User) (int, error) {
 			logrus.Debugf("Skipping publish resume: '%s'", r.Title)
 			continue
 		}
-		updateCompanyName(r, s.c.CompanyNameSuffix)
-
-		if err := client.Resume.ResumesEdit(r); err != nil {
-			logrus.Errorf("Error editing resume '%s': %s", r.Title, err)
-		}
 
 		if err := client.Resume.ResumesPublish(r); err != nil {
 			return 0, fmt.Errorf("Error publishing resume '%s': %s", r.Title, err)

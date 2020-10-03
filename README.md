@@ -17,7 +17,5 @@ listen_address: 127.0.0.1:8090
 log_level: debug
 database_path: ./database_.db
 cookie_name: hhupd
-cookie_encryption_key: pe69fad213bb6eaf0b54f873bd199ea3
-#optional field
-company_name_suffix: . 
+cookie_encryption_key: pe69fad213bb6eaf0b54f873bd199ea3 
 ````

@@ -27,7 +27,6 @@ type Config struct {
 	DatabasePath           string        `json:"database_path" yaml:"database_path"`
 	PublicURL              *url.URL      `json:"-" yaml:"-"`
 	CookieName             string        `json:"cookie_name" yaml:"cookie_name"`
-	CompanyNameSuffix      string        `json:"-" yaml:"company_name_suffix"`
 	CookieHostname         string        `json:"-" yaml:"-"`
 	CookieSecure           bool          `json:"-" yaml:"-"`
 	CookieEncryptionKey    string        `json:"cookie_encryption_key" yaml:"cookie_encryption_key"`
