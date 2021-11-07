@@ -13,12 +13,17 @@ import (
 	"github.com/artkescha/hh-updater/hhclient"
 	"github.com/boltdb/bolt"
 	"github.com/gorilla/context"
-	"github.com/leominov/hh"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/oauth2"
 )
 
 const UserCtxKey = "ctxUser"
+
+// Endpoint is HH's OAuth 2.0 endpoint.
+var Endpoint = oauth2.Endpoint{
+	AuthURL:  "https://hh.ru/oauth/authorize",
+	TokenURL: "https://hh.ru/oauth/token",
+}
 
 var (
 	ErrEmptyResumeList = errors.New("Empty resume list")
@@ -53,7 +58,7 @@ func NewServer(config *config.Config) *Server {
 		c:        config,
 		userList: map[string]*User{},
 		oAuthConf: &oauth2.Config{
-			Endpoint:     hh.Endpoint,
+			Endpoint:     Endpoint,
 			ClientID:     config.ClientID,
 			ClientSecret: config.ClientSecret,
 			RedirectURL:  config.RedirectURL,

@@ -6,8 +6,6 @@ github.com/golang/protobuf/proto
 github.com/gorilla/context
 # github.com/konsorten/go-windows-terminal-sequences v1.0.3
 github.com/konsorten/go-windows-terminal-sequences
-# github.com/leominov/hh v0.0.0-20170523150605-e63e61f3de52
-github.com/leominov/hh
 # github.com/sirupsen/logrus v1.6.0
 github.com/sirupsen/logrus
 # golang.org/x/net v0.0.0-20190108225652-1e06a53dbb7e
