@@ -18,16 +18,17 @@ type ResumeList struct {
 }
 
 type Resume struct {
-	ID         string    `json:"id"`
-	Title      string    `json:"title"`
-	TotalViews int       `json:"total_views"`
-	NewViews   int       `json:"new_views"`
-	URL        string    `json:"url"`
-	LastName   string    `json:"last_name"`
-	FirstName  string    `json:"first_name"`
-	MiddleName string    `json:"middle_name"`
-	Age        int       `json:"age"`
-	Experience []Company `json:"experience"`
+	ID            string    `json:"id"`
+	Title         string    `json:"title"`
+	TotalViews    int       `json:"total_views"`
+	NewViews      int       `json:"new_views"`
+	URL           string    `json:"url"`
+	LastName      string    `json:"last_name"`
+	FirstName     string    `json:"first_name"`
+	MiddleName    string    `json:"middle_name"`
+	Age           int       `json:"age"`
+	Experience    []Company `json:"experience"`
+	NextPublishAt string    `json:"next_publish_at"`
 }
 
 type Company struct {
@@ -72,7 +73,6 @@ func (r *ResumeService) ResumesPublish(resume *Resume) error {
 	}
 	return nil
 }
-
 
 func (r *ResumeService) ResumesStatus(resume *Resume) (*ResumeStatus, error) {
 	resp, err := r.client.Get(fmt.Sprintf("%sresumes/%s/status", DefaultBaseURL, resume.ID))
