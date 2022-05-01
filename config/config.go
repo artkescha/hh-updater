@@ -31,6 +31,7 @@ type Config struct {
 	CookieSecure           bool          `json:"-" yaml:"-"`
 	CookieEncryptionKey    string        `json:"cookie_encryption_key" yaml:"cookie_encryption_key"`
 	CookieEncryptionCipher cipher.Block  `json:"-" yaml:"-"`
+	CompanyNamesSuffix     string        `json:"" yaml:"company_name_suffix"`
 }
 
 func ConfigFromFile(file string) (*Config, error) {

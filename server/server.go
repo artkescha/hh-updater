@@ -155,7 +155,7 @@ func (s *Server) CallbackHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/logged.html", http.StatusFound)
 }
 
-func (s *Server) publishUserResumes(user *User) (int, error) {
+func (s *Server) upAndPublishUserResumes(user *User) (int, error) {
 	var updateCount int
 	client := hhclient.NewClient(user.Token)
 	if _, err := client.Me.GetMe(); err != nil {
@@ -176,11 +176,18 @@ func (s *Server) publishUserResumes(user *User) (int, error) {
 			return 0, fmt.Errorf("Error getting resume status '%s': %v", r.Title, err)
 		}
 		if !status.CanPublishOrUpdate {
-			logrus.Debugf("Skipping publish resume: '%s'", r.Title)
+			logrus.Debugf(""+
+				"Skipping publish resume: '%s'", r.Title)
 			continue
 		}
+		if len(s.c.CompanyNamesSuffix) > 0 {
+			upExperience(r.Experience, s.c.CompanyNamesSuffix)
+			if err := client.Resume.ResumeEdit(r); err != nil {
+				return 0, fmt.Errorf("Error editing resume '%s': %s", r.Title, err)
+			}
+		}
 
-		if err := client.Resume.ResumesPublish(r); err != nil {
+		if err := client.Resume.ResumePublish(r); err != nil {
 			return 0, fmt.Errorf("Error publishing resume '%s': %s", r.Title, err)
 		}
 		logrus.Debugf("Publishing resume: '%s' companies: '%s'", r.Title, r.Experience)
@@ -309,7 +316,7 @@ func (s *Server) UpdateLoop() {
 				s.userListChanged = true
 				logrus.Infof("New expiry date for user %s token: %s", user.Email, user.Token.Expiry.String())
 			}
-			updates, err := s.publishUserResumes(user)
+			updates, err := s.upAndPublishUserResumes(user)
 			if err != nil {
 				if err == ErrEmptyResumeList {
 					logrus.Infof("Deleting user with empty resume list: %s", user.Email)
