@@ -175,7 +175,6 @@ func (s *Server) publishUserResumes(user *User) (int, error) {
 		if err != nil {
 			return 0, fmt.Errorf("Error getting resume status '%s': %v", r.Title, err)
 		}
-		logrus.Debugf("resume status: %+v", r)
 		if !status.CanPublishOrUpdate {
 			logrus.Debugf("Skipping publish resume: '%s'", r.Title)
 			continue
