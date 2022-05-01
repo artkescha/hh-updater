@@ -1,5 +1,5 @@
 # hh-updater
-Автоматическое обновление даты публикации резюме на сервисе hh.ru (https://dev.hh.ru)
+Автоматическое обновление даты публикации резюме и добавление суффикса на сервисе hh.ru (https://dev.hh.ru)
 
 Для использование Вам необходимо зарегистрировать приложение на hh.ru
 
@@ -17,5 +17,6 @@ listen_address: 127.0.0.1:8090
 log_level: debug
 database_path: ./database_.db
 cookie_name: hhupd
-cookie_encryption_key: pe69fad213bb6eaf0b54f873bd199ea3 
+cookie_encryption_key: pe69fad213bb6eaf0b54f873bd199ea3
+company_name_suffix: .
 ````
