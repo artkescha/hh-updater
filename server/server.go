@@ -176,8 +176,7 @@ func (s *Server) upAndPublishUserResumes(user *User) (int, error) {
 			return 0, fmt.Errorf("Error getting resume status '%s': %v", r.Title, err)
 		}
 		if !status.CanPublishOrUpdate {
-			logrus.Debugf(""+
-				"Skipping publish resume: '%s'", r.Title)
+			logrus.Debugf("Skipping publish resume: '%s'", r.Title)
 			continue
 		}
 		if len(s.c.CompanyNamesSuffix) > 0 {
