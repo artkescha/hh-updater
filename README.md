@@ -18,5 +18,6 @@ log_level: debug
 database_path: ./database_.db
 cookie_name: hhupd
 cookie_encryption_key: pe69fad213bb6eaf0b54f873bd199ea3
+#optional field
 experience_description_suffix: .
 ````

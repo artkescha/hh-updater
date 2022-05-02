@@ -179,24 +179,34 @@ func (s *Server) upAndPublishUserResumes(user *User) (int, error) {
 			logrus.Debugf("Skipping publish resume: '%s'", r.Title)
 			continue
 		}
-		if len(s.c.ExperienceDescSuffix) > 0 {
-			resume, err := client.Resume.ReadResume(r.ID)
-			if err != nil {
-				return 0, fmt.Errorf("Error read resume resume '%s': %s", r.Title, err)
-			}
-			upExperience(resume.Experience, s.c.ExperienceDescSuffix)
-
-			if err := client.Resume.EditResume(resume); err != nil {
-				return 0, fmt.Errorf("Error editing resume '%s': %s", r.Title, err)
-			}
+		if err := s.updateResume(client, r.ID, upExperience); err != nil {
+			logrus.Errorf("error update resume '%s': fail %s", r.Title, err)
+			continue
 		}
 		if err := client.Resume.ResumePublish(r); err != nil {
-			return 0, fmt.Errorf("Error publishing resume '%s': %s", r.Title, err)
+			return 0, fmt.Errorf("error publishing resume '%s': %s", r.Title, err)
 		}
 		updateCount++
 		logrus.Infof("Resume updated: '%s'", r.Title)
 	}
 	return updateCount, nil
+}
+
+func (s *Server) updateResume(client *hhclient.Client, resumeId string,
+	upFunc func(companies []hhclient.Company, prefix string)) error {
+
+	if len(s.c.ExperienceDescSuffix) > 0 {
+		resume, err := client.Resume.ReadResume(resumeId)
+		if err != nil {
+			return fmt.Errorf("error read resume fail %s", err)
+		}
+		upFunc(resume.Experience, s.c.ExperienceDescSuffix)
+
+		if err := client.Resume.EditResume(resume); err != nil {
+			return fmt.Errorf("error editing resume fail %s", err)
+		}
+	}
+	return nil
 }
 
 func (s *Server) RestoreUserList() error {
