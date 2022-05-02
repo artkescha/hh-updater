@@ -177,19 +177,22 @@ func (s *Server) upAndPublishUserResumes(user *User) (int, error) {
 		}
 		if !status.CanPublishOrUpdate {
 			logrus.Debugf("Skipping publish resume: '%s'", r.Title)
-			continue
+			//continue
 		}
 		if len(s.c.CompanyNamesSuffix) > 0 {
-			upExperience(r.Experience, s.c.CompanyNamesSuffix)
-			if err := client.Resume.ResumeEdit(r); err != nil {
+			resume, err := client.Resume.ReadResume(r.ID)
+			if err != nil {
+				return 0, fmt.Errorf("Error read resume resume '%s': %s", r.Title, err)
+			}
+			upExperience(resume.Experience, s.c.CompanyNamesSuffix)
+
+			if err := client.Resume.EditResume(resume); err != nil {
 				return 0, fmt.Errorf("Error editing resume '%s': %s", r.Title, err)
 			}
 		}
-
 		if err := client.Resume.ResumePublish(r); err != nil {
 			return 0, fmt.Errorf("Error publishing resume '%s': %s", r.Title, err)
 		}
-		logrus.Debugf("Publishing resume: '%s' companies: '%s'", r.Title, r.Experience)
 		updateCount++
 		logrus.Infof("Resume updated: '%s'", r.Title)
 	}

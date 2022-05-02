@@ -7,11 +7,11 @@ import (
 
 func upExperience(companies []hhclient.Company, prefix string) {
 	for idx, _ := range companies {
-		companies[idx].Name = updateName(companies[idx].Name, prefix)
+		companies[idx].Description = updateDescription(companies[idx].Description, prefix)
 	}
 }
 
-func updateName(name string, suffix string) string {
+func updateDescription(name string, suffix string) string {
 	if strings.HasSuffix(name, suffix) {
 		return strings.TrimSuffix(name, suffix)
 	}
