@@ -194,17 +194,17 @@ func (s *Server) upAndPublishUserResumes(user *User) (int, error) {
 
 func (s *Server) updateResume(client *hhclient.Client, resumeId string,
 	upFunc func(companies []hhclient.Company, prefix string)) error {
+	if len(s.c.ExperienceDescSuffix) == 0 {
+		return nil
+	}
+	resume, err := client.Resume.ReadResume(resumeId)
+	if err != nil {
+		return fmt.Errorf("error read resume fail %s", err)
+	}
+	upFunc(resume.Experience, s.c.ExperienceDescSuffix)
 
-	if len(s.c.ExperienceDescSuffix) > 0 {
-		resume, err := client.Resume.ReadResume(resumeId)
-		if err != nil {
-			return fmt.Errorf("error read resume fail %s", err)
-		}
-		upFunc(resume.Experience, s.c.ExperienceDescSuffix)
-
-		if err := client.Resume.EditResume(resume); err != nil {
-			return fmt.Errorf("error editing resume fail %s", err)
-		}
+	if err := client.Resume.EditResume(resume); err != nil {
+		return fmt.Errorf("error editing resume fail %s", err)
 	}
 	return nil
 }
