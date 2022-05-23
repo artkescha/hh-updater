@@ -181,7 +181,6 @@ func (s *Server) upAndPublishUserResumes(user *User) (int, error) {
 		}
 		if err := s.updateResume(client, r.ID, upExperience); err != nil {
 			logrus.Errorf("error update resume '%s': fail %s", r.Title, err)
-			continue
 		}
 		if err := client.Resume.ResumePublish(r); err != nil {
 			return 0, fmt.Errorf("error publishing resume '%s': %s", r.Title, err)

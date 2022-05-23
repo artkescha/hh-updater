@@ -106,7 +106,6 @@ func (r *ResumeService) ReadResume(resumeId string) (*Resume, error) {
 		return nil, err
 	}
 	if code := resp.StatusCode; code < 200 || code > 299 {
-		logrus.Debug("resumes publish fail status: %d", code)
 		return nil, fmt.Errorf("Incorrect status code (%s)", resp.Status)
 	}
 	defer func() {
